@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Create Exam Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1569f0;">
+        <div class="container">
+            <a class="navbar-brand" href="#">Exam Administrator Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'generate_otp' %}">Generate OTP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_exam_card' %}">Create Exam Card</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_exam_cards' %}">View Exam Card</a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Create Exam Card</h1>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Display non-field errors -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Display field errors -->
+                    <div class="form-group">
+                        {{ form.student.label_tag }}  <!-- Label for student dropdown -->
+                        {{ form.student }}  <!-- Student dropdown -->
+                        {% if form.student.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.student.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.exam.label_tag }}  <!-- Label for exam -->
+                        {{ form.exam }}  <!-- Exam dropdown -->
+                        {% if form.exam.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.exam.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.issued.label_tag }}  <!-- Label for issued checkbox -->
+                        {{ form.issued }}  <!-- Issued checkbox -->
+                        {% if form.issued.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.issued.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.otp_code.label_tag }}  <!-- Label for OTP code -->
+                        {{ form.otp_code }}  <!-- OTP code input -->
+                        {% if form.otp_code.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.otp_code.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.units.label_tag }}  <!-- Label for units -->
+                        {{ form.units }}  <!-- Units selection -->
+                        {% if form.units.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.units.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.year_of_study.label_tag }}  <!-- Label for year of study -->
+                        {{ form.year_of_study }}  <!-- Year of study input -->
+                        {% if form.year_of_study.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.year_of_study.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.exam_photo.label_tag }}  <!-- Label for exam photo -->
+                        {{ form.exam_photo }}  <!-- Exam photo upload -->
+                        {% if form.exam_photo.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.exam_photo.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Generate Exam Card</button>
+                </form>
+            </div>
+        </div>
+    </div>            
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

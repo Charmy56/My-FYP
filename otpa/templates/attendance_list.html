@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+        }
+        .card {
+            border-radius: 0.5rem;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #ffffff;
+            border-bottom: 1px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3>Attendance List</h3>
+            </div>
+            <div class="card-body">
+                {% if attendance_records %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in attendance_records %}
+                                <tr>
+                                    <td>{{ record.student.name }}</td>
+                                    <td>{{ record.course.name }}</td>
+                                    <td>{{ record.date }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-center">No attendance records found,all are confirmed by lecturer</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>View Exam Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef; /* Light grey background */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            border-radius: 8px 8px 0 0;
+            object-fit: cover;
+            height: 180px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-title {
+            margin-bottom: 10px;
+        }
+        .card-text {
+            font-size: 1rem;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff; /* Blue background for table headers */
+            color: #ffffff;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f8f9fa; /* Light grey for odd rows */
+        }
+        tbody tr:nth-child(even) {
+            background-color: #ffffff; /* White for even rows */
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .navbar {
+            background-color: #007bff; /* Blue background for the navbar */
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important; /* White text for navbar items */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #e2e6ea !important; /* Light color on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Exam Administrator Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'generate_otp' %}">Generate OTP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_exam_card' %}">Create Exam Card</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_exam_cards' %}">View Exam Card</a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Exam Cards</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Exam</th>
+                        <th>Units</th>
+                        <th>Exam OTP</th>
+                        <th>Issued</th>
+                        <th>Photo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam_card in exam_cards %}
+                    <tr>
+                        <td>{{ exam_card.student }}</td>
+                        <td>{{ exam_card.exam }}</td>
+                        <td>{{ exam_card.units.all|join:", " }}</td>
+                        <td>{{ exam_card.otp_code }}</td>
+                        <td>{% if exam_card.issued %}Yes{% else %}No{% endif %}</td>
+                        <td>
+                            <img src="{{ exam_card.exam_photo.url }}" alt="Exam Photo" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No exam cards available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
